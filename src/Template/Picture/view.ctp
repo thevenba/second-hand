@@ -1,47 +1,39 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var \App\Model\Entity\VehicleModel $vehicleModel
+ * @var \App\Model\Entity\Picture $picture
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Vehicle Model'), ['action' => 'edit', $vehicleModel->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Vehicle Model'), ['action' => 'delete', $vehicleModel->id], ['confirm' => __('Are you sure you want to delete # {0}?', $vehicleModel->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Vehicle Model'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Vehicle Model'), ['action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('Edit Picture'), ['action' => 'edit', $picture->id]) ?> </li>
+        <li><?= $this->Form->postLink(__('Delete Picture'), ['action' => 'delete', $picture->id], ['confirm' => __('Are you sure you want to delete # {0}?', $picture->id)]) ?> </li>
+        <li><?= $this->Html->link(__('List Picture'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Picture'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Second Hand'), ['controller' => 'SecondHand', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Second Hand'), ['controller' => 'SecondHand', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
-<div class="vehicleModel view large-9 medium-8 columns content">
-    <h3><?= h($vehicleModel->name) ?></h3>
+<div class="picture view large-9 medium-8 columns content">
+    <h3><?= h($picture->id) ?></h3>
     <table class="vertical-table">
         <tr>
-            <th scope="row"><?= __('Name') ?></th>
-            <td><?= h($vehicleModel->name) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Brand') ?></th>
-            <td><?= h($vehicleModel->brand) ?></td>
+            <th scope="row"><?= __('Url') ?></th>
+            <td><?= h($picture->url) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($vehicleModel->id) ?></td>
+            <td><?= $this->Number->format($picture->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Engine Size') ?></th>
-            <td><?= $this->Number->format($vehicleModel->engine_size) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Year') ?></th>
-            <td><?= h($vehicleModel->year) ?></td>
+            <th scope="row"><?= __('Preview') ?></th>
+            <td><img src="<?= h($picture->url) ?>" style="max-height: 500px; max-width: 500px;"/></td>
         </tr>
     </table>
     <div class="related">
         <h4><?= __('Related Second Hand') ?></h4>
-        <?php if (!empty($vehicleModel->second_hand)): ?>
+        <?php if (!empty($picture->second_hand)): ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -55,7 +47,7 @@
                 <th scope="col"><?= __('Vehicle Model Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($vehicleModel->second_hand as $secondHand): ?>
+            <?php foreach ($picture->second_hand as $secondHand): ?>
             <tr>
                 <td><?= h($secondHand->id) ?></td>
                 <td><?= h($secondHand->price) ?></td>

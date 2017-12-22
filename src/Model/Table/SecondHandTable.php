@@ -45,6 +45,12 @@ class SecondHandTable extends Table
             'foreignKey' => 'vehicle_model_id',
             'joinType' => 'INNER'
         ]);
+        
+        $this->belongsToMany('Picture', [
+            'foreignKey' => 'second_hand_id',
+            'targetForeignKey' => 'picture_id',
+            'joinTable' => 'picture_second_hand'
+        ]);
     }
 
     /**
@@ -83,11 +89,6 @@ class SecondHandTable extends Table
             ->scalar('description')
             ->requirePresence('description', 'create')
             ->notEmpty('description');
-
-        $validator
-            ->scalar('pic')
-            ->requirePresence('pic', 'create')
-            ->notEmpty('pic');
 
         $validator
             ->boolean('is_approved')

@@ -12,7 +12,6 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenDate $first_registration_date
  * @property int $nb_owners
  * @property string $description
- * @property string $pic
  * @property bool $is_approved
  * @property int $dealer_id
  * @property int $vehicle_model_id
@@ -38,11 +37,11 @@ class SecondHand extends Entity
         'first_registration_date' => true,
         'nb_owners' => true,
         'description' => true,
-        'pic' => true,
         'is_approved' => true,
         'dealer_id' => true,
         'vehicle_model_id' => true,
         'dealer' => true,
-        'vehicle_model' => true
+        'vehicle_model' => true,
+        'picture' => true
     ];
 }

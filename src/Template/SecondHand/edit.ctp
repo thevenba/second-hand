@@ -18,6 +18,8 @@
         <li><?= $this->Html->link(__('New Dealer'), ['controller' => 'Dealer', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Vehicle Model'), ['controller' => 'VehicleModel', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Vehicle Model'), ['controller' => 'VehicleModel', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Picture'), ['action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Picture'), ['action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="secondHand form large-9 medium-8 columns content">
@@ -30,10 +32,10 @@
             echo $this->Form->control('first_registration_date');
             echo $this->Form->control('nb_owners');
             echo $this->Form->control('description');
-            echo $this->Form->control('pic');
             echo $this->Form->control('is_approved');
             echo $this->Form->control('dealer_id', ['options' => $dealer]);
             echo $this->Form->control('vehicle_model_id', ['options' => $vehicleModel]);
+            echo $this->Form->control('picture._ids', ['options' => $picture]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

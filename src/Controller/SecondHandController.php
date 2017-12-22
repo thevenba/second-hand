@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -10,16 +11,14 @@ use App\Controller\AppController;
  *
  * @method \App\Model\Entity\SecondHand[] paginate($object = null, array $settings = [])
  */
-class SecondHandController extends AppController
-{
+class SecondHandController extends AppController {
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Dealer', 'VehicleModel']
         ];
@@ -36,10 +35,9 @@ class SecondHandController extends AppController
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $secondHand = $this->SecondHand->get($id, [
-            'contain' => ['Dealer', 'VehicleModel']
+            'contain' => ['Dealer', 'VehicleModel', 'Picture']
         ]);
 
         $this->set('secondHand', $secondHand);
@@ -51,8 +49,7 @@ class SecondHandController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $secondHand = $this->SecondHand->newEntity();
         if ($this->request->is('post')) {
             $secondHand = $this->SecondHand->patchEntity($secondHand, $this->request->getData());
@@ -64,9 +61,22 @@ class SecondHandController extends AppController
             $this->Flash->error(__('The second hand could not be saved. Please, try again.'));
         }
         $dealer = $this->SecondHand->Dealer->find('list', ['limit' => 200]);
-        $vehicleModel = $this->SecondHand->VehicleModel->find('list', ['limit' => 200]);
-        $this->set(compact('secondHand', 'dealer', 'vehicleModel'));
+        $allBrands = $this->SecondHand->VehicleModel->find()->select(['brand'])->distinct(['brand']);
+        $allBrandsArray = array();
+        $vehicleModel = array();
+        foreach ($allBrands as $brand) {
+            $allBrandsArray[] = $brand['brand'];
+            $vehicleModel[$brand['brand']] = $brand['brand'];
+            $vehicleModelsByBrand = $this->SecondHand->VehicleModel->find('list')->where(['brand' => $brand['brand']]);
+            foreach ($vehicleModelsByBrand as $vehicleModelByBrand) {
+                array_push($vehicleModel, $vehicleModelByBrand);
+            }
+        }
+//        $vehicleModel = $this->SecondHand->VehicleModel->find('list', ['limit' => 200]);
+        $picture = $this->SecondHand->Picture->find();
+        $this->set(compact('secondHand', 'dealer', 'vehicleModel', 'picture'));
         $this->set('_serialize', ['secondHand']);
+        $this->set('allBrandsArray', $allBrandsArray);
     }
 
     /**
@@ -76,8 +86,7 @@ class SecondHandController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $secondHand = $this->SecondHand->get($id, [
             'contain' => []
         ]);
@@ -92,7 +101,8 @@ class SecondHandController extends AppController
         }
         $dealer = $this->SecondHand->Dealer->find('list', ['limit' => 200]);
         $vehicleModel = $this->SecondHand->VehicleModel->find('list', ['limit' => 200]);
-        $this->set(compact('secondHand', 'dealer', 'vehicleModel'));
+        $picture = $this->SecondHand->Picture->find('list');
+        $this->set(compact('secondHand', 'dealer', 'vehicleModel', 'picture'));
         $this->set('_serialize', ['secondHand']);
     }
 
@@ -103,8 +113,7 @@ class SecondHandController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $secondHand = $this->SecondHand->get($id);
         if ($this->SecondHand->delete($secondHand)) {
@@ -115,4 +124,5 @@ class SecondHandController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
 }

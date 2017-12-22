@@ -15,6 +15,8 @@
         <li><?= $this->Html->link(__('New Dealer'), ['controller' => 'Dealer', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Vehicle Model'), ['controller' => 'VehicleModel', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Vehicle Model'), ['controller' => 'VehicleModel', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Picture'), ['controller' => 'Picture', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Picture'), ['controller' => 'Picture', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
 <div class="secondHand view large-9 medium-8 columns content">
@@ -57,8 +59,29 @@
         <h4><?= __('Description') ?></h4>
         <?= $this->Text->autoParagraph(h($secondHand->description)); ?>
     </div>
-    <div class="row">
-        <h4><?= __('Pic') ?></h4>
-        <?= $this->Text->autoParagraph(h($secondHand->pic)); ?>
+    <div class="related">
+        <h4><?= __('Related Picture') ?></h4>
+        <?php if (!empty($secondHand->picture)): ?>
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th scope="col"><?= __('Id') ?></th>
+                <th scope="col"><?= __('Url') ?></th>
+                <th scope="col"><?= __('Preview') ?></th>
+                <th scope="col" class="actions"><?= __('Actions') ?></th>
+            </tr>
+            <?php foreach ($secondHand->picture as $picture): ?>
+            <tr>
+                <td><?= h($picture->id) ?></td>
+                <td><?= h($picture->url) ?></td>
+                <td><img src="<?= h($picture->url) ?>" style="max-height: 50px; max-width: 250px;"/></td>
+                <td class="actions">
+                    <?= $this->Html->link(__('View'), ['controller' => 'Picture', 'action' => 'view', $picture->id]) ?>
+                    <?= $this->Html->link(__('Edit'), ['controller' => 'Picture', 'action' => 'edit', $picture->id]) ?>
+                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Picture', 'action' => 'delete', $picture->id], ['confirm' => __('Are you sure you want to delete # {0}?', $picture->id)]) ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php endif; ?>
     </div>
 </div>

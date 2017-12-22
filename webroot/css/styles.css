@@ -1,0 +1,31 @@
+/* 
+    Created on : 21 déc. 2017, 18:28:23
+    Author     : babat
+*/
+
+#imgPickerSelector {
+        overflow: auto;
+        list-style-image: none;
+        list-style-position: outside;
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #imgPickerSelector > li {
+        margin: 0px 12px 12px 0px;
+        float: left;
+    }
+
+    #imgPickerSelector > li > div {
+        width: 250px;
+        height: 250px;
+        background-origin: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #imgPickerSelector > li > div.selected {
+        border: 5px solid dodgerblue;
+        opacity: .9;
+    }
